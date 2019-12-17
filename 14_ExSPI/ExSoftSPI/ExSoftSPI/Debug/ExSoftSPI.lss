@@ -1,0 +1,343 @@
+
+ExSoftSPI.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  0000023c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000001be  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       0000000a  000081be  000001be  00000232  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .comment      00000030  00000000  00000000  0000023c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000026c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000038  00000000  00000000  000002a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001c48  00000000  00000000  000002e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000163d  00000000  00000000  00001f28  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000047d  00000000  00000000  00003565  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000064  00000000  00000000  000039e4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000c60  00000000  00000000  00003a48  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000381  00000000  00000000  000046a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000028  00000000  00000000  00004a29  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+  1e:	12 c0       	rjmp	.+36     	; 0x44 <__bad_interrupt>
+  20:	11 c0       	rjmp	.+34     	; 0x44 <__bad_interrupt>
+  22:	10 c0       	rjmp	.+32     	; 0x44 <__bad_interrupt>
+  24:	0f c0       	rjmp	.+30     	; 0x44 <__bad_interrupt>
+  26:	0e c0       	rjmp	.+28     	; 0x44 <__bad_interrupt>
+  28:	0d c0       	rjmp	.+26     	; 0x44 <__bad_interrupt>
+  2a:	0c c0       	rjmp	.+24     	; 0x44 <__bad_interrupt>
+  2c:	0b c0       	rjmp	.+22     	; 0x44 <__bad_interrupt>
+  2e:	0a c0       	rjmp	.+20     	; 0x44 <__bad_interrupt>
+  30:	09 c0       	rjmp	.+18     	; 0x44 <__bad_interrupt>
+  32:	08 c0       	rjmp	.+16     	; 0x44 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	3c d0       	rcall	.+120    	; 0xba <main>
+  42:	bb c0       	rjmp	.+374    	; 0x1ba <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <spi_init>:
+		if((PORTA.IN & MOSI) != 0)
+		{
+			*c |= 1;
+		}
+	}
+}
+  46:	88 23       	and	r24, r24
+  48:	49 f0       	breq	.+18     	; 0x5c <spi_init+0x16>
+  4a:	e0 e0       	ldi	r30, 0x00	; 0
+  4c:	f4 e0       	ldi	r31, 0x04	; 4
+  4e:	84 e0       	ldi	r24, 0x04	; 4
+  50:	82 83       	std	Z+2, r24	; 0x02
+  52:	80 e1       	ldi	r24, 0x10	; 16
+  54:	85 83       	std	Z+5, r24	; 0x05
+  56:	8a e1       	ldi	r24, 0x1A	; 26
+  58:	81 83       	std	Z+1, r24	; 0x01
+  5a:	08 95       	ret
+  5c:	e0 e0       	ldi	r30, 0x00	; 0
+  5e:	f4 e0       	ldi	r31, 0x04	; 4
+  60:	84 e0       	ldi	r24, 0x04	; 4
+  62:	81 83       	std	Z+1, r24	; 0x01
+  64:	8a e1       	ldi	r24, 0x1A	; 26
+  66:	82 83       	std	Z+2, r24	; 0x02
+  68:	08 95       	ret
+
+0000006a <spi_tx>:
+  6a:	dc 01       	movw	r26, r24
+  6c:	2c 91       	ld	r18, X
+  6e:	1c 92       	st	X, r1
+  70:	88 e0       	ldi	r24, 0x08	; 8
+  72:	8a 95       	dec	r24
+  74:	f1 f7       	brne	.-4      	; 0x72 <spi_tx+0x8>
+  76:	88 e0       	ldi	r24, 0x08	; 8
+  78:	e0 e0       	ldi	r30, 0x00	; 0
+  7a:	f4 e0       	ldi	r31, 0x04	; 4
+  7c:	38 e0       	ldi	r19, 0x08	; 8
+  7e:	42 e0       	ldi	r20, 0x02	; 2
+  80:	35 83       	std	Z+5, r19	; 0x05
+  82:	22 23       	and	r18, r18
+  84:	14 f0       	brlt	.+4      	; 0x8a <spi_tx+0x20>
+  86:	46 83       	std	Z+6, r20	; 0x06
+  88:	01 c0       	rjmp	.+2      	; 0x8c <spi_tx+0x22>
+  8a:	45 83       	std	Z+5, r20	; 0x05
+  8c:	22 0f       	add	r18, r18
+  8e:	9c 91       	ld	r25, X
+  90:	99 0f       	add	r25, r25
+  92:	9c 93       	st	X, r25
+  94:	98 e0       	ldi	r25, 0x08	; 8
+  96:	9a 95       	dec	r25
+  98:	f1 f7       	brne	.-4      	; 0x96 <spi_tx+0x2c>
+  9a:	36 83       	std	Z+6, r19	; 0x06
+  9c:	90 85       	ldd	r25, Z+8	; 0x08
+  9e:	92 ff       	sbrs	r25, 2
+  a0:	03 c0       	rjmp	.+6      	; 0xa8 <spi_tx+0x3e>
+  a2:	9c 91       	ld	r25, X
+  a4:	91 60       	ori	r25, 0x01	; 1
+  a6:	9c 93       	st	X, r25
+  a8:	98 e0       	ldi	r25, 0x08	; 8
+  aa:	9a 95       	dec	r25
+  ac:	f1 f7       	brne	.-4      	; 0xaa <spi_tx+0x40>
+  ae:	81 50       	subi	r24, 0x01	; 1
+  b0:	39 f7       	brne	.-50     	; 0x80 <spi_tx+0x16>
+  b2:	88 e0       	ldi	r24, 0x08	; 8
+  b4:	8a 95       	dec	r24
+  b6:	f1 f7       	brne	.-4      	; 0xb4 <spi_tx+0x4a>
+  b8:	08 95       	ret
+
+000000ba <main>:
+
+
+
+int main(void)
+{
+  ba:	cf 93       	push	r28
+  bc:	df 93       	push	r29
+  be:	cd b7       	in	r28, 0x3d	; 61
+  c0:	de b7       	in	r29, 0x3e	; 62
+  c2:	28 97       	sbiw	r28, 0x08	; 8
+  c4:	cd bf       	out	0x3d, r28	; 61
+  c6:	de bf       	out	0x3e, r29	; 62
+	uint8_t i, buf[8], check = 0;
+	
+
+#if MASTER==1	
+    spi_init(1);		// MASTER
+  c8:	81 e0       	ldi	r24, 0x01	; 1
+  ca:	bd df       	rcall	.-134    	; 0x46 <spi_init>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  cc:	2f e3       	ldi	r18, 0x3F	; 63
+  ce:	3d e0       	ldi	r19, 0x0D	; 13
+  d0:	83 e0       	ldi	r24, 0x03	; 3
+  d2:	21 50       	subi	r18, 0x01	; 1
+  d4:	30 40       	sbci	r19, 0x00	; 0
+  d6:	80 40       	sbci	r24, 0x00	; 0
+  d8:	e1 f7       	brne	.-8      	; 0xd2 <main+0x18>
+  da:	00 c0       	rjmp	.+0      	; 0xdc <main+0x22>
+  dc:	00 00       	nop
+	_delay_ms(300);		// MASTER, SLAVE 동시에 켰을 때 MASTER가 늦게 시작하게 하기 위함
+	
+	strcpy((char *) buf, "ABCD");
+  de:	85 e0       	ldi	r24, 0x05	; 5
+  e0:	ee eb       	ldi	r30, 0xBE	; 190
+  e2:	f1 e8       	ldi	r31, 0x81	; 129
+  e4:	de 01       	movw	r26, r28
+  e6:	11 96       	adiw	r26, 0x01	; 1
+  e8:	01 90       	ld	r0, Z+
+  ea:	0d 92       	st	X+, r0
+  ec:	8a 95       	dec	r24
+  ee:	e1 f7       	brne	.-8      	; 0xe8 <main+0x2e>
+	PORTA.OUTCLR = SS_;
+  f0:	00 e0       	ldi	r16, 0x00	; 0
+  f2:	14 e0       	ldi	r17, 0x04	; 4
+  f4:	68 94       	set
+  f6:	ff 24       	eor	r15, r15
+  f8:	f4 f8       	bld	r15, 4
+  fa:	f8 01       	movw	r30, r16
+  fc:	f6 82       	std	Z+6, r15	; 0x06
+	for(i=0; i<4; i++)
+	{
+		spi_tx(&buf[i]);		// ABCD <---> abcd
+  fe:	ce 01       	movw	r24, r28
+ 100:	01 96       	adiw	r24, 0x01	; 1
+ 102:	b3 df       	rcall	.-154    	; 0x6a <spi_tx>
+ 104:	ce 01       	movw	r24, r28
+ 106:	02 96       	adiw	r24, 0x02	; 2
+ 108:	b0 df       	rcall	.-160    	; 0x6a <spi_tx>
+ 10a:	ce 01       	movw	r24, r28
+ 10c:	03 96       	adiw	r24, 0x03	; 3
+ 10e:	ad df       	rcall	.-166    	; 0x6a <spi_tx>
+ 110:	ce 01       	movw	r24, r28
+ 112:	04 96       	adiw	r24, 0x04	; 4
+ 114:	aa df       	rcall	.-172    	; 0x6a <spi_tx>
+	}
+	PORTA.OUTSET = SS_;
+ 116:	f8 01       	movw	r30, r16
+ 118:	f5 82       	std	Z+5, r15	; 0x05
+	
+	if(strncmp((char *)buf, "abcd", 4) == 0)
+ 11a:	44 e0       	ldi	r20, 0x04	; 4
+ 11c:	50 e0       	ldi	r21, 0x00	; 0
+ 11e:	63 ec       	ldi	r22, 0xC3	; 195
+ 120:	71 e8       	ldi	r23, 0x81	; 129
+ 122:	ce 01       	movw	r24, r28
+ 124:	01 96       	adiw	r24, 0x01	; 1
+ 126:	3b d0       	rcall	.+118    	; 0x19e <strncmp>
+
+
+
+int main(void)
+{
+	uint8_t i, buf[8], check = 0;
+ 128:	11 e0       	ldi	r17, 0x01	; 1
+ 12a:	89 2b       	or	r24, r25
+ 12c:	09 f0       	breq	.+2      	; 0x130 <main+0x76>
+ 12e:	10 e0       	ldi	r17, 0x00	; 0
+ 130:	8d e8       	ldi	r24, 0x8D	; 141
+ 132:	90 e2       	ldi	r25, 0x20	; 32
+ 134:	01 97       	sbiw	r24, 0x01	; 1
+ 136:	f1 f7       	brne	.-4      	; 0x134 <main+0x7a>
+ 138:	00 00       	nop
+	if(strncmp((char *)buf, "abcd", 4) == 0)
+	{
+		check = 1;
+	}
+	_delay_ms(10);		// SLAVE에게 시간을 주기 위함
+	PORTA.OUTCLR = SS_;
+ 13a:	e1 2c       	mov	r14, r1
+ 13c:	68 94       	set
+ 13e:	ff 24       	eor	r15, r15
+ 140:	f2 f8       	bld	r15, 2
+ 142:	00 e1       	ldi	r16, 0x10	; 16
+ 144:	f7 01       	movw	r30, r14
+ 146:	06 83       	std	Z+6, r16	; 0x06
+	
+	for(i=0; i<4; i++)
+	{
+		spi_tx(&buf[i]);
+ 148:	ce 01       	movw	r24, r28
+ 14a:	01 96       	adiw	r24, 0x01	; 1
+ 14c:	8e df       	rcall	.-228    	; 0x6a <spi_tx>
+ 14e:	ce 01       	movw	r24, r28
+ 150:	02 96       	adiw	r24, 0x02	; 2
+ 152:	8b df       	rcall	.-234    	; 0x6a <spi_tx>
+ 154:	ce 01       	movw	r24, r28
+ 156:	03 96       	adiw	r24, 0x03	; 3
+ 158:	88 df       	rcall	.-240    	; 0x6a <spi_tx>
+ 15a:	ce 01       	movw	r24, r28
+ 15c:	04 96       	adiw	r24, 0x04	; 4
+ 15e:	85 df       	rcall	.-246    	; 0x6a <spi_tx>
+	}
+	PORTA.OUTSET = SS_;
+ 160:	f7 01       	movw	r30, r14
+ 162:	05 83       	std	Z+5, r16	; 0x05
+	
+	if(strncmp((char *)buf, "ABCD", 4) == 0)
+ 164:	44 e0       	ldi	r20, 0x04	; 4
+ 166:	50 e0       	ldi	r21, 0x00	; 0
+ 168:	6e eb       	ldi	r22, 0xBE	; 190
+ 16a:	71 e8       	ldi	r23, 0x81	; 129
+ 16c:	ce 01       	movw	r24, r28
+ 16e:	01 96       	adiw	r24, 0x01	; 1
+ 170:	16 d0       	rcall	.+44     	; 0x19e <strncmp>
+ 172:	89 2b       	or	r24, r25
+ 174:	09 f4       	brne	.+2      	; 0x178 <main+0xbe>
+	{
+		check |= 2;
+ 176:	12 60       	ori	r17, 0x02	; 2
+	}
+	PORTA.DIRCLR = SS_;
+ 178:	e0 e0       	ldi	r30, 0x00	; 0
+ 17a:	f4 e0       	ldi	r31, 0x04	; 4
+ 17c:	80 e1       	ldi	r24, 0x10	; 16
+ 17e:	82 83       	std	Z+2, r24	; 0x02
+	while( ((PORTA.IN&SS_)==0) );
+	 
+	if ( strncmp((char *)buf, "abcd", 4)==0 ) check |= 2;
+#endif
+	 
+	PORTA.DIRSET = _BV(7);
+ 180:	80 e8       	ldi	r24, 0x80	; 128
+ 182:	81 83       	std	Z+1, r24	; 0x01
+	PORTA.OUTSET = _BV(7);
+ 184:	85 83       	std	Z+5, r24	; 0x05
+	while(1)
+	{
+		if(check != 3)
+ 186:	13 30       	cpi	r17, 0x03	; 3
+ 188:	09 f0       	breq	.+2      	; 0x18c <main+0xd2>
+		{
+			PORTA.OUTTGL = _BV(7);
+ 18a:	87 83       	std	Z+7, r24	; 0x07
+ 18c:	2a e0       	ldi	r18, 0x0A	; 10
+ 18e:	3b e8       	ldi	r19, 0x8B	; 139
+ 190:	92 e0       	ldi	r25, 0x02	; 2
+ 192:	21 50       	subi	r18, 0x01	; 1
+ 194:	30 40       	sbci	r19, 0x00	; 0
+ 196:	90 40       	sbci	r25, 0x00	; 0
+ 198:	e1 f7       	brne	.-8      	; 0x192 <main+0xd8>
+ 19a:	00 c0       	rjmp	.+0      	; 0x19c <main+0xe2>
+ 19c:	f4 cf       	rjmp	.-24     	; 0x186 <main+0xcc>
+
+0000019e <strncmp>:
+ 19e:	fb 01       	movw	r30, r22
+ 1a0:	dc 01       	movw	r26, r24
+ 1a2:	41 50       	subi	r20, 0x01	; 1
+ 1a4:	50 40       	sbci	r21, 0x00	; 0
+ 1a6:	30 f0       	brcs	.+12     	; 0x1b4 <strncmp+0x16>
+ 1a8:	8d 91       	ld	r24, X+
+ 1aa:	01 90       	ld	r0, Z+
+ 1ac:	80 19       	sub	r24, r0
+ 1ae:	19 f4       	brne	.+6      	; 0x1b6 <strncmp+0x18>
+ 1b0:	00 20       	and	r0, r0
+ 1b2:	b9 f7       	brne	.-18     	; 0x1a2 <strncmp+0x4>
+ 1b4:	88 1b       	sub	r24, r24
+ 1b6:	99 0b       	sbc	r25, r25
+ 1b8:	08 95       	ret
+
+000001ba <_exit>:
+ 1ba:	f8 94       	cli
+
+000001bc <__stop_program>:
+ 1bc:	ff cf       	rjmp	.-2      	; 0x1bc <__stop_program>

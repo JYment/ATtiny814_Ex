@@ -1,0 +1,262 @@
+
+ExLOWpower.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  0000018c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000118  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000001  00803e00  00803e00  0000018c  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000018c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001bc  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  000001f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001be7  00000000  00000000  00000220  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000015b0  00000000  00000000  00001e07  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000036d  00000000  00000000  000033b7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000044  00000000  00000000  00003724  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000ed7  00000000  00000000  00003768  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000142  00000000  00000000  0000463f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000030  00000000  00000000  00004781  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	28 c0       	rjmp	.+80     	; 0x54 <__bad_interrupt>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	27 c0       	rjmp	.+78     	; 0x56 <__vector_3>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	21 c0       	rjmp	.+66     	; 0x54 <__bad_interrupt>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1c c0       	rjmp	.+56     	; 0x54 <__bad_interrupt>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+  1e:	1a c0       	rjmp	.+52     	; 0x54 <__bad_interrupt>
+  20:	19 c0       	rjmp	.+50     	; 0x54 <__bad_interrupt>
+  22:	18 c0       	rjmp	.+48     	; 0x54 <__bad_interrupt>
+  24:	17 c0       	rjmp	.+46     	; 0x54 <__bad_interrupt>
+  26:	16 c0       	rjmp	.+44     	; 0x54 <__bad_interrupt>
+  28:	15 c0       	rjmp	.+42     	; 0x54 <__bad_interrupt>
+  2a:	14 c0       	rjmp	.+40     	; 0x54 <__bad_interrupt>
+  2c:	13 c0       	rjmp	.+38     	; 0x54 <__bad_interrupt>
+  2e:	12 c0       	rjmp	.+36     	; 0x54 <__bad_interrupt>
+  30:	11 c0       	rjmp	.+34     	; 0x54 <__bad_interrupt>
+  32:	10 c0       	rjmp	.+32     	; 0x54 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+
+00000040 <__do_clear_bss>:
+  40:	2e e3       	ldi	r18, 0x3E	; 62
+  42:	a0 e0       	ldi	r26, 0x00	; 0
+  44:	be e3       	ldi	r27, 0x3E	; 62
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a1 30       	cpi	r26, 0x01	; 1
+  4c:	b2 07       	cpc	r27, r18
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	11 d0       	rcall	.+34     	; 0x74 <main>
+  52:	60 c0       	rjmp	.+192    	; 0x114 <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <__vector_3>:
+#include <avr/interrupt.h>
+#include <avr/sleep.h>
+#include <util/delay.h>
+
+ISR(PORTA_PORT_vect)
+{
+  56:	1f 92       	push	r1
+  58:	0f 92       	push	r0
+  5a:	0f b6       	in	r0, 0x3f	; 63
+  5c:	0f 92       	push	r0
+  5e:	11 24       	eor	r1, r1
+  60:	8f 93       	push	r24
+	PORTA.INTFLAGS	= _BV(2);
+  62:	84 e0       	ldi	r24, 0x04	; 4
+  64:	80 93 09 04 	sts	0x0409, r24	; 0x800409 <__TEXT_REGION_LENGTH__+0x700409>
+}
+  68:	8f 91       	pop	r24
+  6a:	0f 90       	pop	r0
+  6c:	0f be       	out	0x3f, r0	; 63
+  6e:	0f 90       	pop	r0
+  70:	1f 90       	pop	r1
+  72:	18 95       	reti
+
+00000074 <main>:
+{
+    static uint8_t count = 0;
+	
+	// Lower Power 를 위한 설정
+	// 1. 낮은 클럭설정(내부 32kHz)
+	_PROTECTED_WRITE(CLKCTRL_MCLKCTRLB, (CLKCTRL_PEN_bm | CLKCTRL_PDIV_2X_gc));
+  74:	88 ed       	ldi	r24, 0xD8	; 216
+  76:	91 e0       	ldi	r25, 0x01	; 1
+  78:	84 bf       	out	0x34, r24	; 52
+  7a:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__TEXT_REGION_LENGTH__+0x700061>
+	_PROTECTED_WRITE(CLKCTRL_MCLKCTRLA, CLKCTRL_CLKSEL_OSCULP32K_gc);
+  7e:	84 bf       	out	0x34, r24	; 52
+  80:	90 93 60 00 	sts	0x0060, r25	; 0x800060 <__TEXT_REGION_LENGTH__+0x700060>
+	while(CLKCTRL.MCLKSTATUS & CLKCTRL_SOSC_bm);		// Wait for system oscillator changing to finish
+  84:	e0 e6       	ldi	r30, 0x60	; 96
+  86:	f0 e0       	ldi	r31, 0x00	; 0
+  88:	83 81       	ldd	r24, Z+3	; 0x03
+  8a:	80 fd       	sbrc	r24, 0
+  8c:	fd cf       	rjmp	.-6      	; 0x88 <main+0x14>
+  8e:	e0 e1       	ldi	r30, 0x10	; 16
+  90:	f4 e0       	ldi	r31, 0x04	; 4
+	
+	// 2. 사용하지 않는 핀은 pullup
+	for(uint8_t i=0; i<8; i++)
+	{
+		*((uint8_t *)&PORTA + 0x10 + i) |= 1 << PORT_PULLUPEN_bp;
+  92:	80 81       	ld	r24, Z
+  94:	88 60       	ori	r24, 0x08	; 8
+  96:	81 93       	st	Z+, r24
+	_PROTECTED_WRITE(CLKCTRL_MCLKCTRLB, (CLKCTRL_PEN_bm | CLKCTRL_PDIV_2X_gc));
+	_PROTECTED_WRITE(CLKCTRL_MCLKCTRLA, CLKCTRL_CLKSEL_OSCULP32K_gc);
+	while(CLKCTRL.MCLKSTATUS & CLKCTRL_SOSC_bm);		// Wait for system oscillator changing to finish
+	
+	// 2. 사용하지 않는 핀은 pullup
+	for(uint8_t i=0; i<8; i++)
+  98:	e8 31       	cpi	r30, 0x18	; 24
+  9a:	84 e0       	ldi	r24, 0x04	; 4
+  9c:	f8 07       	cpc	r31, r24
+  9e:	c9 f7       	brne	.-14     	; 0x92 <main+0x1e>
+	
+	// 3. 가능한한 모든기능 off 필요한 기능이라도 쓸때만 켜서 쓰고 바로 끄기
+	
+	// 4. 낮은 전압구동
+	
+	PORTA.DIRSET = _BV(3);
+  a0:	e0 e0       	ldi	r30, 0x00	; 0
+  a2:	f4 e0       	ldi	r31, 0x04	; 4
+  a4:	88 e0       	ldi	r24, 0x08	; 8
+  a6:	81 83       	std	Z+1, r24	; 0x01
+	PORTA.DIRCLR = _BV(2);
+  a8:	84 e0       	ldi	r24, 0x04	; 4
+  aa:	82 83       	std	Z+2, r24	; 0x02
+	PORTA.PIN2CTRL	= PORT_PULLUPEN_bm | PORT_ISC1_bm | PORT_ISC0_bm;		// Falling edge
+  ac:	8b e0       	ldi	r24, 0x0B	; 11
+  ae:	82 8b       	std	Z+18, r24	; 0x12
+	
+	// 5. Sleep으로 대기
+	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  b0:	e0 e5       	ldi	r30, 0x50	; 80
+  b2:	f0 e0       	ldi	r31, 0x00	; 0
+  b4:	80 81       	ld	r24, Z
+  b6:	89 7f       	andi	r24, 0xF9	; 249
+  b8:	84 60       	ori	r24, 0x04	; 4
+  ba:	80 83       	st	Z, r24
+	sleep_enable();
+  bc:	80 81       	ld	r24, Z
+  be:	81 60       	ori	r24, 0x01	; 1
+  c0:	80 83       	st	Z, r24
+	
+	sei();
+  c2:	78 94       	sei
+    while (1) 
+    {
+		// 작동 확인용 코드 전력사용 무시하고 작성
+		for(uint8_t i=0; i<=(count & 15); i++)
+		{
+			PORTA.OUTSET	= _BV(3);
+  c4:	e0 e0       	ldi	r30, 0x00	; 0
+  c6:	f4 e0       	ldi	r31, 0x04	; 4
+  c8:	48 e0       	ldi	r20, 0x08	; 8
+  ca:	20 e0       	ldi	r18, 0x00	; 0
+  cc:	45 83       	std	Z+5, r20	; 0x05
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  ce:	8f ef       	ldi	r24, 0xFF	; 255
+  d0:	93 e0       	ldi	r25, 0x03	; 3
+  d2:	01 97       	sbiw	r24, 0x01	; 1
+  d4:	f1 f7       	brne	.-4      	; 0xd2 <main+0x5e>
+  d6:	00 c0       	rjmp	.+0      	; 0xd8 <main+0x64>
+  d8:	00 00       	nop
+			_delay_ms(250);
+			PORTA.OUTCLR	= _BV(3);
+  da:	46 83       	std	Z+6, r20	; 0x06
+  dc:	8f ef       	ldi	r24, 0xFF	; 255
+  de:	93 e0       	ldi	r25, 0x03	; 3
+  e0:	01 97       	sbiw	r24, 0x01	; 1
+  e2:	f1 f7       	brne	.-4      	; 0xe0 <main+0x6c>
+  e4:	00 c0       	rjmp	.+0      	; 0xe6 <main+0x72>
+  e6:	00 00       	nop
+	
+	sei();
+    while (1) 
+    {
+		// 작동 확인용 코드 전력사용 무시하고 작성
+		for(uint8_t i=0; i<=(count & 15); i++)
+  e8:	2f 5f       	subi	r18, 0xFF	; 255
+  ea:	30 91 00 3e 	lds	r19, 0x3E00	; 0x803e00 <_edata>
+  ee:	62 2f       	mov	r22, r18
+  f0:	70 e0       	ldi	r23, 0x00	; 0
+  f2:	83 2f       	mov	r24, r19
+  f4:	8f 70       	andi	r24, 0x0F	; 15
+  f6:	90 e0       	ldi	r25, 0x00	; 0
+  f8:	86 17       	cp	r24, r22
+  fa:	97 07       	cpc	r25, r23
+  fc:	3c f7       	brge	.-50     	; 0xcc <main+0x58>
+			PORTA.OUTSET	= _BV(3);
+			_delay_ms(250);
+			PORTA.OUTCLR	= _BV(3);
+			_delay_ms(250);
+		}
+		count++;
+  fe:	3f 5f       	subi	r19, 0xFF	; 255
+ 100:	30 93 00 3e 	sts	0x3E00, r19	; 0x803e00 <_edata>
+ 104:	8f ef       	ldi	r24, 0xFF	; 255
+ 106:	9f e0       	ldi	r25, 0x0F	; 15
+ 108:	01 97       	sbiw	r24, 0x01	; 1
+ 10a:	f1 f7       	brne	.-4      	; 0x108 <main+0x94>
+ 10c:	00 c0       	rjmp	.+0      	; 0x10e <main+0x9a>
+ 10e:	00 00       	nop
+		_delay_ms(1000);
+		
+		// 작동 확인 끝
+		
+		sleep_cpu();
+ 110:	88 95       	sleep
+		// Sleep에서 깨어났을 때 이후 동작하는 코드 작성		
+    }
+ 112:	db cf       	rjmp	.-74     	; 0xca <main+0x56>
+
+00000114 <_exit>:
+ 114:	f8 94       	cli
+
+00000116 <__stop_program>:
+ 116:	ff cf       	rjmp	.-2      	; 0x116 <__stop_program>

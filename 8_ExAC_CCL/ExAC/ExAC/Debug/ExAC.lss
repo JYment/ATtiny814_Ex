@@ -1,0 +1,173 @@
+
+ExAC.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  0000010c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000b8  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  0000010c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000013c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  00000178  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001a03  00000000  00000000  000001a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000015a5  00000000  00000000  00001ba3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000306  00000000  00000000  00003148  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000044  00000000  00000000  00003450  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000e42  00000000  00000000  00003494  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000003c  00000000  00000000  000042d6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  00004312  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+  1e:	12 c0       	rjmp	.+36     	; 0x44 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__vector_16>
+  22:	10 c0       	rjmp	.+32     	; 0x44 <__bad_interrupt>
+  24:	0f c0       	rjmp	.+30     	; 0x44 <__bad_interrupt>
+  26:	0e c0       	rjmp	.+28     	; 0x44 <__bad_interrupt>
+  28:	0d c0       	rjmp	.+26     	; 0x44 <__bad_interrupt>
+  2a:	0c c0       	rjmp	.+24     	; 0x44 <__bad_interrupt>
+  2c:	0b c0       	rjmp	.+22     	; 0x44 <__bad_interrupt>
+  2e:	0a c0       	rjmp	.+20     	; 0x44 <__bad_interrupt>
+  30:	09 c0       	rjmp	.+18     	; 0x44 <__bad_interrupt>
+  32:	08 c0       	rjmp	.+16     	; 0x44 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	14 d0       	rcall	.+40     	; 0x6a <main>
+  42:	38 c0       	rjmp	.+112    	; 0xb4 <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <__vector_16>:
+#include <avr/sfr_defs.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+ISR(AC0_AC_vect)
+{
+  46:	1f 92       	push	r1
+  48:	0f 92       	push	r0
+  4a:	0f b6       	in	r0, 0x3f	; 63
+  4c:	0f 92       	push	r0
+  4e:	11 24       	eor	r1, r1
+  50:	8f 93       	push	r24
+	PORTA.OUTTGL	= _BV(3);			// 인터럽트 발생시 PA3 토글
+  52:	88 e0       	ldi	r24, 0x08	; 8
+  54:	80 93 07 04 	sts	0x0407, r24	; 0x800407 <__TEXT_REGION_LENGTH__+0x700407>
+	AC0.STATUS		= AC_CMP_bm;
+  58:	81 e0       	ldi	r24, 0x01	; 1
+  5a:	80 93 77 06 	sts	0x0677, r24	; 0x800677 <__TEXT_REGION_LENGTH__+0x700677>
+}
+  5e:	8f 91       	pop	r24
+  60:	0f 90       	pop	r0
+  62:	0f be       	out	0x3f, r0	; 63
+  64:	0f 90       	pop	r0
+  66:	1f 90       	pop	r1
+  68:	18 95       	reti
+
+0000006a <main>:
+
+
+int main(void)
+{
+	// AINP0 설정
+    PORTA.PIN7CTRL	= (PORTA.PIN7CTRL & ~PORT_ISC_gm) | PORT_ISC_INPUT_DISABLE_gc;
+  6a:	e0 e0       	ldi	r30, 0x00	; 0
+  6c:	f4 e0       	ldi	r31, 0x04	; 4
+  6e:	87 89       	ldd	r24, Z+23	; 0x17
+  70:	88 7f       	andi	r24, 0xF8	; 248
+  72:	84 60       	ori	r24, 0x04	; 4
+  74:	87 8b       	std	Z+23, r24	; 0x17
+	PORTA.PIN7CTRL	&= ~PORT_PULLUPEN_bm;
+  76:	87 89       	ldd	r24, Z+23	; 0x17
+  78:	87 7f       	andi	r24, 0xF7	; 247
+  7a:	87 8b       	std	Z+23, r24	; 0x17
+	
+	VREF.CTRLA	= VREF_DAC0REFSEL_2V5_gc;		// Vref 2.5v로 설정
+  7c:	82 e0       	ldi	r24, 0x02	; 2
+  7e:	80 93 a0 00 	sts	0x00A0, r24	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7000a0>
+	// AC_ENABLE_bm						: Analog Comparator 0 enable
+	// AC_HYSMODE1_bm | AC_HYSMODE0_bm	: hysteresis 50mV설정
+	// AC_CMP_bm						: Analog Comparator 0 Interrupt Enable
+	// AC_MUXNEG_VREF_gc				: AINN0은 A6을 대신하여 Vref(2.5v)사용
+	// AC_MUXPOS_PIN0_gc				: AINP0는 A7을 사용
+	AC0.CTRLA	= AC_ENABLE_bm | AC_HYSMODE1_bm | AC_HYSMODE0_bm;		
+  82:	a0 e7       	ldi	r26, 0x70	; 112
+  84:	b6 e0       	ldi	r27, 0x06	; 6
+  86:	97 e0       	ldi	r25, 0x07	; 7
+  88:	9c 93       	st	X, r25
+	AC0.INTCTRL	= AC_CMP_bm;
+  8a:	91 e0       	ldi	r25, 0x01	; 1
+  8c:	16 96       	adiw	r26, 0x06	; 6
+  8e:	9c 93       	st	X, r25
+  90:	16 97       	sbiw	r26, 0x06	; 6
+	AC0.MUXCTRLA	= AC_MUXNEG_VREF_gc | AC_MUXPOS_PIN0_gc;
+  92:	12 96       	adiw	r26, 0x02	; 2
+  94:	8c 93       	st	X, r24
+	
+	PORTA.DIRSET = _BV(3);
+  96:	88 e0       	ldi	r24, 0x08	; 8
+  98:	81 83       	std	Z+1, r24	; 0x01
+	PORTA.DIRSET = _BV(2);
+  9a:	84 e0       	ldi	r24, 0x04	; 4
+  9c:	81 83       	std	Z+1, r24	; 0x01
+	sei();
+  9e:	78 94       	sei
+    while (1) 
+    {
+		PORTA.OUTTGL = _BV(2);
+  a0:	87 83       	std	Z+7, r24	; 0x07
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a2:	2a e6       	ldi	r18, 0x6A	; 106
+  a4:	34 e0       	ldi	r19, 0x04	; 4
+  a6:	91 e0       	ldi	r25, 0x01	; 1
+  a8:	21 50       	subi	r18, 0x01	; 1
+  aa:	30 40       	sbci	r19, 0x00	; 0
+  ac:	90 40       	sbci	r25, 0x00	; 0
+  ae:	e1 f7       	brne	.-8      	; 0xa8 <main+0x3e>
+  b0:	00 c0       	rjmp	.+0      	; 0xb2 <main+0x48>
+  b2:	f6 cf       	rjmp	.-20     	; 0xa0 <main+0x36>
+
+000000b4 <_exit>:
+  b4:	f8 94       	cli
+
+000000b6 <__stop_program>:
+  b6:	ff cf       	rjmp	.-2      	; 0xb6 <__stop_program>

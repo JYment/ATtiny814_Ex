@@ -1,0 +1,160 @@
+
+ExTimerB.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  00000122  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000ae  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000001  00803e00  00803e00  00000122  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000122  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000154  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  00000190  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000019cb  00000000  00000000  000001b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000155c  00000000  00000000  00001b83  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000027d  00000000  00000000  000030df  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000044  00000000  00000000  0000335c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000cc3  00000000  00000000  000033a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000003c  00000000  00000000  00004063  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  0000409f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	28 c0       	rjmp	.+80     	; 0x54 <__bad_interrupt>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	26 c0       	rjmp	.+76     	; 0x54 <__bad_interrupt>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	21 c0       	rjmp	.+66     	; 0x54 <__bad_interrupt>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1d c0       	rjmp	.+58     	; 0x56 <__vector_13>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+  1e:	1a c0       	rjmp	.+52     	; 0x54 <__bad_interrupt>
+  20:	19 c0       	rjmp	.+50     	; 0x54 <__bad_interrupt>
+  22:	18 c0       	rjmp	.+48     	; 0x54 <__bad_interrupt>
+  24:	17 c0       	rjmp	.+46     	; 0x54 <__bad_interrupt>
+  26:	16 c0       	rjmp	.+44     	; 0x54 <__bad_interrupt>
+  28:	15 c0       	rjmp	.+42     	; 0x54 <__bad_interrupt>
+  2a:	14 c0       	rjmp	.+40     	; 0x54 <__bad_interrupt>
+  2c:	13 c0       	rjmp	.+38     	; 0x54 <__bad_interrupt>
+  2e:	12 c0       	rjmp	.+36     	; 0x54 <__bad_interrupt>
+  30:	11 c0       	rjmp	.+34     	; 0x54 <__bad_interrupt>
+  32:	10 c0       	rjmp	.+32     	; 0x54 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+
+00000040 <__do_clear_bss>:
+  40:	2e e3       	ldi	r18, 0x3E	; 62
+  42:	a0 e0       	ldi	r26, 0x00	; 0
+  44:	be e3       	ldi	r27, 0x3E	; 62
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a1 30       	cpi	r26, 0x01	; 1
+  4c:	b2 07       	cpc	r27, r18
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	1d d0       	rcall	.+58     	; 0x8c <main>
+  52:	2b c0       	rjmp	.+86     	; 0xaa <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <__vector_13>:
+#include <avr/interrupt.h>
+
+#define TERM		10
+
+ISR(TCB0_INT_vect)
+{
+  56:	1f 92       	push	r1
+  58:	0f 92       	push	r0
+  5a:	0f b6       	in	r0, 0x3f	; 63
+  5c:	0f 92       	push	r0
+  5e:	11 24       	eor	r1, r1
+  60:	8f 93       	push	r24
+	static uint8_t t = 0;
+	if(++t >= 50)
+  62:	80 91 00 3e 	lds	r24, 0x3E00	; 0x803e00 <_edata>
+  66:	8f 5f       	subi	r24, 0xFF	; 255
+  68:	80 93 00 3e 	sts	0x3E00, r24	; 0x803e00 <_edata>
+  6c:	82 33       	cpi	r24, 0x32	; 50
+  6e:	28 f0       	brcs	.+10     	; 0x7a <__vector_13+0x24>
+	{
+		PORTA.OUTTGL = _BV(3);
+  70:	88 e0       	ldi	r24, 0x08	; 8
+  72:	80 93 07 04 	sts	0x0407, r24	; 0x800407 <__TEXT_REGION_LENGTH__+0x700407>
+		t = 0;
+  76:	10 92 00 3e 	sts	0x3E00, r1	; 0x803e00 <_edata>
+	}
+	TCB0.INTFLAGS = 0xFF;
+  7a:	8f ef       	ldi	r24, 0xFF	; 255
+  7c:	80 93 46 0a 	sts	0x0A46, r24	; 0x800a46 <__TEXT_REGION_LENGTH__+0x700a46>
+}
+  80:	8f 91       	pop	r24
+  82:	0f 90       	pop	r0
+  84:	0f be       	out	0x3f, r0	; 63
+  86:	0f 90       	pop	r0
+  88:	1f 90       	pop	r1
+  8a:	18 95       	reti
+
+0000008c <main>:
+{
+#if 0
+	TCB0.CTRLA	= TCB_ENABLE_bm;
+	TCB0.CCMP	= F_CPU * TERM / 1000 - 1;
+#else
+	TCB0.CTRLA	= TCB_ENABLE_bm | TCB_CLKSEL_CLKDIV2_gc;
+  8c:	e0 e4       	ldi	r30, 0x40	; 64
+  8e:	fa e0       	ldi	r31, 0x0A	; 10
+  90:	83 e0       	ldi	r24, 0x03	; 3
+  92:	80 83       	st	Z, r24
+	TCB0.CCMP	= F_CPU * TERM / (1000 * 2) - 1;
+  94:	89 e1       	ldi	r24, 0x19	; 25
+  96:	91 e4       	ldi	r25, 0x41	; 65
+  98:	84 87       	std	Z+12, r24	; 0x0c
+  9a:	95 87       	std	Z+13, r25	; 0x0d
+#endif	
+	TCB0.INTCTRL = TCB_CAPT_bm;
+  9c:	81 e0       	ldi	r24, 0x01	; 1
+  9e:	85 83       	std	Z+5, r24	; 0x05
+	
+	sei();
+  a0:	78 94       	sei
+	PORTA.DIRSET = _BV(3);
+  a2:	88 e0       	ldi	r24, 0x08	; 8
+  a4:	80 93 01 04 	sts	0x0401, r24	; 0x800401 <__TEXT_REGION_LENGTH__+0x700401>
+  a8:	ff cf       	rjmp	.-2      	; 0xa8 <main+0x1c>
+
+000000aa <_exit>:
+  aa:	f8 94       	cli
+
+000000ac <__stop_program>:
+  ac:	ff cf       	rjmp	.-2      	; 0xac <__stop_program>

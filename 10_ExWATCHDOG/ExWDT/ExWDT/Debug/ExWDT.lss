@@ -1,0 +1,139 @@
+
+ExWDT.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  000000ea  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000096  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  000000ea  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000011c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000158  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001978  00000000  00000000  00000178  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00001581  00000000  00000000  00001af0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002ee  00000000  00000000  00003071  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00003360  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000d4c  00000000  00000000  00003384  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000048  00000000  00000000  000040d0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  00004118  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+  1e:	12 c0       	rjmp	.+36     	; 0x44 <__bad_interrupt>
+  20:	11 c0       	rjmp	.+34     	; 0x44 <__bad_interrupt>
+  22:	10 c0       	rjmp	.+32     	; 0x44 <__bad_interrupt>
+  24:	0f c0       	rjmp	.+30     	; 0x44 <__bad_interrupt>
+  26:	0e c0       	rjmp	.+28     	; 0x44 <__bad_interrupt>
+  28:	0d c0       	rjmp	.+26     	; 0x44 <__bad_interrupt>
+  2a:	0c c0       	rjmp	.+24     	; 0x44 <__bad_interrupt>
+  2c:	0b c0       	rjmp	.+22     	; 0x44 <__bad_interrupt>
+  2e:	0a c0       	rjmp	.+20     	; 0x44 <__bad_interrupt>
+  30:	09 c0       	rjmp	.+18     	; 0x44 <__bad_interrupt>
+  32:	08 c0       	rjmp	.+16     	; 0x44 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	02 d0       	rcall	.+4      	; 0x46 <main>
+  42:	27 c0       	rjmp	.+78     	; 0x92 <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <main>:
+#include <util/delay.h>
+
+
+int main(void)
+{
+    _PROTECTED_WRITE(WDT_CTRLA, WDT_PERIOD_2KCLK_gc);
+  46:	99 e0       	ldi	r25, 0x09	; 9
+  48:	88 ed       	ldi	r24, 0xD8	; 216
+  4a:	84 bf       	out	0x34, r24	; 52
+  4c:	90 93 00 01 	sts	0x0100, r25	; 0x800100 <__TEXT_REGION_LENGTH__+0x700100>
+	PORTA.DIRSET = _BV(3);
+  50:	e0 e0       	ldi	r30, 0x00	; 0
+  52:	f4 e0       	ldi	r31, 0x04	; 4
+  54:	88 e0       	ldi	r24, 0x08	; 8
+  56:	81 83       	std	Z+1, r24	; 0x01
+	PORTA.OUTSET = _BV(3);
+  58:	85 83       	std	Z+5, r24	; 0x05
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  5a:	2a e2       	ldi	r18, 0x2A	; 42
+  5c:	3c e2       	ldi	r19, 0x2C	; 44
+  5e:	8a e0       	ldi	r24, 0x0A	; 10
+  60:	21 50       	subi	r18, 0x01	; 1
+  62:	30 40       	sbci	r19, 0x00	; 0
+  64:	80 40       	sbci	r24, 0x00	; 0
+  66:	e1 f7       	brne	.-8      	; 0x60 <main+0x1a>
+  68:	00 00       	nop
+	_delay_ms(1000);
+	
+    while (1) 
+    {
+//		_PROTECTED_WRITE(WDT_CTRLA, WDT_PERIOD_2KCLK_gc);
+		PORTA.OUTCLR = _BV(3);
+  6a:	88 e0       	ldi	r24, 0x08	; 8
+  6c:	86 83       	std	Z+6, r24	; 0x06
+  6e:	9a e2       	ldi	r25, 0x2A	; 42
+  70:	2c e2       	ldi	r18, 0x2C	; 44
+  72:	3a e0       	ldi	r19, 0x0A	; 10
+  74:	91 50       	subi	r25, 0x01	; 1
+  76:	20 40       	sbci	r18, 0x00	; 0
+  78:	30 40       	sbci	r19, 0x00	; 0
+  7a:	e1 f7       	brne	.-8      	; 0x74 <main+0x2e>
+  7c:	00 00       	nop
+		_delay_ms(1000);
+		PORTA.OUTSET = _BV(3);
+  7e:	85 83       	std	Z+5, r24	; 0x05
+  80:	9a e6       	ldi	r25, 0x6A	; 106
+  82:	24 e0       	ldi	r18, 0x04	; 4
+  84:	31 e0       	ldi	r19, 0x01	; 1
+  86:	91 50       	subi	r25, 0x01	; 1
+  88:	20 40       	sbci	r18, 0x00	; 0
+  8a:	30 40       	sbci	r19, 0x00	; 0
+  8c:	e1 f7       	brne	.-8      	; 0x86 <main+0x40>
+  8e:	00 c0       	rjmp	.+0      	; 0x90 <main+0x4a>
+  90:	ed cf       	rjmp	.-38     	; 0x6c <main+0x26>
+
+00000092 <_exit>:
+  92:	f8 94       	cli
+
+00000094 <__stop_program>:
+  94:	ff cf       	rjmp	.-2      	; 0x94 <__stop_program>

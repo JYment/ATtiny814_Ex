@@ -1,0 +1,241 @@
+
+ExEEPROM.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  00000193  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000011e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .eeprom       00000001  00810000  00810000  00000192  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .comment      00000030  00000000  00000000  00000193  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001c4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000068  00000000  00000000  00000200  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001b7b  00000000  00000000  00000268  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00001628  00000000  00000000  00001de3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000004e5  00000000  00000000  0000340b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000034  00000000  00000000  000038f0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000c7b  00000000  00000000  00003924  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000016c  00000000  00000000  0000459f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  0000470b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	1b c0       	rjmp	.+54     	; 0x38 <__ctors_end>
+   2:	22 c0       	rjmp	.+68     	; 0x48 <__bad_interrupt>
+   4:	21 c0       	rjmp	.+66     	; 0x48 <__bad_interrupt>
+   6:	20 c0       	rjmp	.+64     	; 0x48 <__bad_interrupt>
+   8:	1f c0       	rjmp	.+62     	; 0x48 <__bad_interrupt>
+   a:	1e c0       	rjmp	.+60     	; 0x48 <__bad_interrupt>
+   c:	1d c0       	rjmp	.+58     	; 0x48 <__bad_interrupt>
+   e:	1c c0       	rjmp	.+56     	; 0x48 <__bad_interrupt>
+  10:	1b c0       	rjmp	.+54     	; 0x48 <__bad_interrupt>
+  12:	1a c0       	rjmp	.+52     	; 0x48 <__bad_interrupt>
+  14:	19 c0       	rjmp	.+50     	; 0x48 <__bad_interrupt>
+  16:	18 c0       	rjmp	.+48     	; 0x48 <__bad_interrupt>
+  18:	17 c0       	rjmp	.+46     	; 0x48 <__bad_interrupt>
+  1a:	16 c0       	rjmp	.+44     	; 0x48 <__bad_interrupt>
+  1c:	15 c0       	rjmp	.+42     	; 0x48 <__bad_interrupt>
+  1e:	14 c0       	rjmp	.+40     	; 0x48 <__bad_interrupt>
+  20:	13 c0       	rjmp	.+38     	; 0x48 <__bad_interrupt>
+  22:	12 c0       	rjmp	.+36     	; 0x48 <__bad_interrupt>
+  24:	11 c0       	rjmp	.+34     	; 0x48 <__bad_interrupt>
+  26:	10 c0       	rjmp	.+32     	; 0x48 <__bad_interrupt>
+  28:	0f c0       	rjmp	.+30     	; 0x48 <__bad_interrupt>
+  2a:	0e c0       	rjmp	.+28     	; 0x48 <__bad_interrupt>
+  2c:	0d c0       	rjmp	.+26     	; 0x48 <__bad_interrupt>
+  2e:	0c c0       	rjmp	.+24     	; 0x48 <__bad_interrupt>
+  30:	0b c0       	rjmp	.+22     	; 0x48 <__bad_interrupt>
+  32:	0a c0       	rjmp	.+20     	; 0x48 <__bad_interrupt>
+
+00000034 <__trampolines_end>:
+  34:	01 02       	muls	r16, r17
+  36:	03 04       	cpc	r0, r3
+
+00000038 <__ctors_end>:
+  38:	11 24       	eor	r1, r1
+  3a:	1f be       	out	0x3f, r1	; 63
+  3c:	cf ef       	ldi	r28, 0xFF	; 255
+  3e:	cd bf       	out	0x3d, r28	; 61
+  40:	df e3       	ldi	r29, 0x3F	; 63
+  42:	de bf       	out	0x3e, r29	; 62
+  44:	27 d0       	rcall	.+78     	; 0x94 <main>
+  46:	69 c0       	rjmp	.+210    	; 0x11a <_exit>
+
+00000048 <__bad_interrupt>:
+  48:	db cf       	rjmp	.-74     	; 0x0 <__vectors>
+
+0000004a <blink>:
+
+
+void blink(uint8_t n)
+{
+	uint8_t i;
+	PORTA.DIRSET = _BV(3);
+  4a:	98 e0       	ldi	r25, 0x08	; 8
+  4c:	90 93 01 04 	sts	0x0401, r25	; 0x800401 <__TEXT_REGION_LENGTH__+0x700401>
+	for(i=0; i<2*n; i++)
+  50:	48 2f       	mov	r20, r24
+  52:	50 e0       	ldi	r21, 0x00	; 0
+  54:	44 0f       	add	r20, r20
+  56:	55 1f       	adc	r21, r21
+  58:	14 16       	cp	r1, r20
+  5a:	15 06       	cpc	r1, r21
+  5c:	9c f4       	brge	.+38     	; 0x84 <blink+0x3a>
+  5e:	90 e0       	ldi	r25, 0x00	; 0
+	{
+		PORTA.OUTTGL = _BV(3);
+  60:	e0 e0       	ldi	r30, 0x00	; 0
+  62:	f4 e0       	ldi	r31, 0x04	; 4
+  64:	88 e0       	ldi	r24, 0x08	; 8
+  66:	87 83       	std	Z+7, r24	; 0x07
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  68:	2a e0       	ldi	r18, 0x0A	; 10
+  6a:	3b e8       	ldi	r19, 0x8B	; 139
+  6c:	62 e0       	ldi	r22, 0x02	; 2
+  6e:	21 50       	subi	r18, 0x01	; 1
+  70:	30 40       	sbci	r19, 0x00	; 0
+  72:	60 40       	sbci	r22, 0x00	; 0
+  74:	e1 f7       	brne	.-8      	; 0x6e <blink+0x24>
+  76:	00 c0       	rjmp	.+0      	; 0x78 <blink+0x2e>
+
+void blink(uint8_t n)
+{
+	uint8_t i;
+	PORTA.DIRSET = _BV(3);
+	for(i=0; i<2*n; i++)
+  78:	9f 5f       	subi	r25, 0xFF	; 255
+  7a:	29 2f       	mov	r18, r25
+  7c:	30 e0       	ldi	r19, 0x00	; 0
+  7e:	24 17       	cp	r18, r20
+  80:	35 07       	cpc	r19, r21
+  82:	8c f3       	brlt	.-30     	; 0x66 <blink+0x1c>
+  84:	85 e1       	ldi	r24, 0x15	; 21
+  86:	96 e1       	ldi	r25, 0x16	; 22
+  88:	25 e0       	ldi	r18, 0x05	; 5
+  8a:	81 50       	subi	r24, 0x01	; 1
+  8c:	90 40       	sbci	r25, 0x00	; 0
+  8e:	20 40       	sbci	r18, 0x00	; 0
+  90:	e1 f7       	brne	.-8      	; 0x8a <blink+0x40>
+  92:	08 95       	ret
+
+00000094 <main>:
+
+int main(void)
+{
+    uint8_t c, p;
+	
+	p = pgm_read_byte(&pgm_data[2]);		// p=3 플래시는 쉽게 읽을 수 있지만 eep처럼 쉽게 쓸수는 없음
+  94:	e6 e3       	ldi	r30, 0x36	; 54
+  96:	f0 e0       	ldi	r31, 0x00	; 0
+  98:	e4 91       	lpm	r30, Z
+	if(p != 3)								// p=3일 것이다. 만일 아니면 LED를 빠르게 점멸하고 진행하지 않음
+  9a:	e3 30       	cpi	r30, 0x03	; 3
+  9c:	61 f0       	breq	.+24     	; 0xb6 <main+0x22>
+	{
+		PORTA.DIRSET = _BV(3);
+  9e:	88 e0       	ldi	r24, 0x08	; 8
+  a0:	80 93 01 04 	sts	0x0401, r24	; 0x800401 <__TEXT_REGION_LENGTH__+0x700401>
+		while(1)
+		{
+			PORTA.OUTTGL = _BV(3);
+  a4:	e0 e0       	ldi	r30, 0x00	; 0
+  a6:	f4 e0       	ldi	r31, 0x04	; 4
+  a8:	87 83       	std	Z+7, r24	; 0x07
+  aa:	a2 ec       	ldi	r26, 0xC2	; 194
+  ac:	b2 ea       	ldi	r27, 0xA2	; 162
+  ae:	11 97       	sbiw	r26, 0x01	; 1
+  b0:	f1 f7       	brne	.-4      	; 0xae <main+0x1a>
+  b2:	00 c0       	rjmp	.+0      	; 0xb4 <main+0x20>
+  b4:	f9 cf       	rjmp	.-14     	; 0xa8 <main+0x14>
+			_delay_ms(50);
+		}
+	}
+	
+	c = eeprom_read_byte(&eep_data);		// eeprom 값을 읽음
+  b6:	80 e0       	ldi	r24, 0x00	; 0
+  b8:	90 e0       	ldi	r25, 0x00	; 0
+  ba:	13 d0       	rcall	.+38     	; 0xe2 <eeprom_read_byte>
+	c++;									
+  bc:	c1 e0       	ldi	r28, 0x01	; 1
+  be:	c8 0f       	add	r28, r24
+	eeprom_write_byte(&eep_data, c);		// 다시 저장. 전원을 다시 실행시키면 1씩 증가되어 있음
+  c0:	6c 2f       	mov	r22, r28
+  c2:	80 e0       	ldi	r24, 0x00	; 0
+  c4:	90 e0       	ldi	r25, 0x00	; 0
+  c6:	15 d0       	rcall	.+42     	; 0xf2 <eeprom_write_byte>
+    while (1) 
+    {
+		blink((c%3)+1);
+  c8:	8b ea       	ldi	r24, 0xAB	; 171
+  ca:	c8 9f       	mul	r28, r24
+  cc:	81 2d       	mov	r24, r1
+  ce:	11 24       	eor	r1, r1
+  d0:	86 95       	lsr	r24
+  d2:	98 2f       	mov	r25, r24
+  d4:	99 0f       	add	r25, r25
+  d6:	89 0f       	add	r24, r25
+  d8:	c8 1b       	sub	r28, r24
+  da:	cf 5f       	subi	r28, 0xFF	; 255
+  dc:	8c 2f       	mov	r24, r28
+  de:	b5 df       	rcall	.-150    	; 0x4a <blink>
+  e0:	fd cf       	rjmp	.-6      	; 0xdc <main+0x48>
+
+000000e2 <eeprom_read_byte>:
+  e2:	03 d0       	rcall	.+6      	; 0xea <eeprom_mapen>
+  e4:	80 81       	ld	r24, Z
+  e6:	99 27       	eor	r25, r25
+  e8:	08 95       	ret
+
+000000ea <eeprom_mapen>:
+  ea:	fc 01       	movw	r30, r24
+  ec:	e0 50       	subi	r30, 0x00	; 0
+  ee:	fc 4e       	sbci	r31, 0xEC	; 236
+  f0:	08 95       	ret
+
+000000f2 <eeprom_write_byte>:
+  f2:	26 2f       	mov	r18, r22
+
+000000f4 <eeprom_write_r18>:
+  f4:	af 93       	push	r26
+  f6:	bf 93       	push	r27
+  f8:	e0 e0       	ldi	r30, 0x00	; 0
+  fa:	f0 e1       	ldi	r31, 0x10	; 16
+  fc:	32 81       	ldd	r19, Z+2	; 0x02
+  fe:	31 fd       	sbrc	r19, 1
+ 100:	fd cf       	rjmp	.-6      	; 0xfc <eeprom_write_r18+0x8>
+ 102:	dc 01       	movw	r26, r24
+ 104:	a0 50       	subi	r26, 0x00	; 0
+ 106:	bc 4e       	sbci	r27, 0xEC	; 236
+ 108:	2c 93       	st	X, r18
+ 10a:	2d e9       	ldi	r18, 0x9D	; 157
+ 10c:	24 bf       	out	0x34, r18	; 52
+ 10e:	23 e0       	ldi	r18, 0x03	; 3
+ 110:	20 83       	st	Z, r18
+ 112:	01 96       	adiw	r24, 0x01	; 1
+ 114:	bf 91       	pop	r27
+ 116:	af 91       	pop	r26
+ 118:	08 95       	ret
+
+0000011a <_exit>:
+ 11a:	f8 94       	cli
+
+0000011c <__stop_program>:
+ 11c:	ff cf       	rjmp	.-2      	; 0x11c <__stop_program>

@@ -1,0 +1,275 @@
+
+ExBOD2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  00000174  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000120  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000174  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001a4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  000001e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001a33  00000000  00000000  00000208  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00001589  00000000  00000000  00001c3b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000037f  00000000  00000000  000031c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000034  00000000  00000000  00003544  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000cfa  00000000  00000000  00003578  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000161  00000000  00000000  00004272  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  000043d3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+  1e:	12 c0       	rjmp	.+36     	; 0x44 <__bad_interrupt>
+  20:	11 c0       	rjmp	.+34     	; 0x44 <__bad_interrupt>
+  22:	10 c0       	rjmp	.+32     	; 0x44 <__bad_interrupt>
+  24:	0f c0       	rjmp	.+30     	; 0x44 <__bad_interrupt>
+  26:	0e c0       	rjmp	.+28     	; 0x44 <__bad_interrupt>
+  28:	0d c0       	rjmp	.+26     	; 0x44 <__bad_interrupt>
+  2a:	0c c0       	rjmp	.+24     	; 0x44 <__bad_interrupt>
+  2c:	0b c0       	rjmp	.+22     	; 0x44 <__bad_interrupt>
+  2e:	0a c0       	rjmp	.+20     	; 0x44 <__bad_interrupt>
+  30:	09 c0       	rjmp	.+18     	; 0x44 <__bad_interrupt>
+  32:	08 c0       	rjmp	.+16     	; 0x44 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	19 d0       	rcall	.+50     	; 0x74 <main>
+  42:	6c c0       	rjmp	.+216    	; 0x11c <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <led>:
+#include <util/delay.h>
+
+
+void led(void)
+{
+	if(PORTA.IN & _BV(1))		PORTA.OUTSET = _BV(3);
+  46:	80 91 08 04 	lds	r24, 0x0408	; 0x800408 <__TEXT_REGION_LENGTH__+0x700408>
+  4a:	81 ff       	sbrs	r24, 1
+  4c:	04 c0       	rjmp	.+8      	; 0x56 <led+0x10>
+  4e:	88 e0       	ldi	r24, 0x08	; 8
+  50:	80 93 05 04 	sts	0x0405, r24	; 0x800405 <__TEXT_REGION_LENGTH__+0x700405>
+  54:	03 c0       	rjmp	.+6      	; 0x5c <led+0x16>
+	else						PORTA.OUTCLR = _BV(3);
+  56:	88 e0       	ldi	r24, 0x08	; 8
+  58:	80 93 06 04 	sts	0x0406, r24	; 0x800406 <__TEXT_REGION_LENGTH__+0x700406>
+	if(PORTA.IN & _BV(2))		PORTA.OUTSET = _BV(7);
+  5c:	80 91 08 04 	lds	r24, 0x0408	; 0x800408 <__TEXT_REGION_LENGTH__+0x700408>
+  60:	82 ff       	sbrs	r24, 2
+  62:	04 c0       	rjmp	.+8      	; 0x6c <led+0x26>
+  64:	80 e8       	ldi	r24, 0x80	; 128
+  66:	80 93 05 04 	sts	0x0405, r24	; 0x800405 <__TEXT_REGION_LENGTH__+0x700405>
+  6a:	08 95       	ret
+	else						PORTA.OUTCLR = _BV(7);
+  6c:	80 e8       	ldi	r24, 0x80	; 128
+  6e:	80 93 06 04 	sts	0x0406, r24	; 0x800406 <__TEXT_REGION_LENGTH__+0x700406>
+  72:	08 95       	ret
+
+00000074 <main>:
+}
+
+
+int main(void)
+{
+    PORTA.DIRCLR = _BV(6) | _BV(3) | _BV(4);
+  74:	e0 e0       	ldi	r30, 0x00	; 0
+  76:	f4 e0       	ldi	r31, 0x04	; 4
+  78:	88 e5       	ldi	r24, 0x58	; 88
+  7a:	82 83       	std	Z+2, r24	; 0x02
+	PORTA.PIN6CTRL = 0;
+  7c:	16 8a       	std	Z+22, r1	; 0x16
+	PORTA.DIRSET = _BV(3) | _BV(7);
+  7e:	88 e8       	ldi	r24, 0x88	; 136
+  80:	81 83       	std	Z+1, r24	; 0x01
+	
+	//VREF_0_init
+	VREF.CTRLA = VREF_DAC0REFSEL_4V34_gc;
+  82:	e0 ea       	ldi	r30, 0xA0	; 160
+  84:	f0 e0       	ldi	r31, 0x00	; 0
+  86:	83 e0       	ldi	r24, 0x03	; 3
+  88:	80 83       	st	Z, r24
+	VREF.CTRLB = VREF_DAC0REFEN_bm;
+  8a:	81 e0       	ldi	r24, 0x01	; 1
+  8c:	81 83       	std	Z+1, r24	; 0x01
+	// 4.34V(255)  3.8V(223)  3.3V(194)  2.0V(118)  0V(0)
+	
+	DAC0.CTRLA = DAC_ENABLE_bm | DAC_OUTEN_bm;
+  8e:	81 e4       	ldi	r24, 0x41	; 65
+  90:	80 93 80 06 	sts	0x0680, r24	; 0x800680 <__TEXT_REGION_LENGTH__+0x700680>
+	
+	uint8_t i;
+	i = 255;
+	
+	// 3.8V까지
+	while(i-- > 223)
+  94:	ce ef       	ldi	r28, 0xFE	; 254
+	{
+		DAC0.DATA = i;
+  96:	00 e8       	ldi	r16, 0x80	; 128
+  98:	16 e0       	ldi	r17, 0x06	; 6
+  9a:	f8 01       	movw	r30, r16
+  9c:	c1 83       	std	Z+1, r28	; 0x01
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  9e:	ff e5       	ldi	r31, 0x5F	; 95
+  a0:	2a ee       	ldi	r18, 0xEA	; 234
+  a2:	80 e0       	ldi	r24, 0x00	; 0
+  a4:	f1 50       	subi	r31, 0x01	; 1
+  a6:	20 40       	sbci	r18, 0x00	; 0
+  a8:	80 40       	sbci	r24, 0x00	; 0
+  aa:	e1 f7       	brne	.-8      	; 0xa4 <main+0x30>
+  ac:	00 c0       	rjmp	.+0      	; 0xae <main+0x3a>
+  ae:	00 00       	nop
+		_delay_ms(3000/(255-223+1));
+		led();
+  b0:	ca df       	rcall	.-108    	; 0x46 <led>
+	
+	uint8_t i;
+	i = 255;
+	
+	// 3.8V까지
+	while(i-- > 223)
+  b2:	c1 50       	subi	r28, 0x01	; 1
+  b4:	ce 3d       	cpi	r28, 0xDE	; 222
+  b6:	89 f7       	brne	.-30     	; 0x9a <main+0x26>
+  b8:	cd ed       	ldi	r28, 0xDD	; 221
+	}
+	
+	// 3.3V까지
+	while(i-- > 194)
+	{
+		DAC0.DATA = i;
+  ba:	00 e8       	ldi	r16, 0x80	; 128
+  bc:	16 e0       	ldi	r17, 0x06	; 6
+  be:	f8 01       	movw	r30, r16
+  c0:	c1 83       	std	Z+1, r28	; 0x01
+  c2:	fa e6       	ldi	r31, 0x6A	; 106
+  c4:	24 e0       	ldi	r18, 0x04	; 4
+  c6:	81 e0       	ldi	r24, 0x01	; 1
+  c8:	f1 50       	subi	r31, 0x01	; 1
+  ca:	20 40       	sbci	r18, 0x00	; 0
+  cc:	80 40       	sbci	r24, 0x00	; 0
+  ce:	e1 f7       	brne	.-8      	; 0xc8 <main+0x54>
+  d0:	00 c0       	rjmp	.+0      	; 0xd2 <main+0x5e>
+		_delay_ms(3000/(223-194+1));
+		led();
+  d2:	b9 df       	rcall	.-142    	; 0x46 <led>
+		_delay_ms(3000/(255-223+1));
+		led();
+	}
+	
+	// 3.3V까지
+	while(i-- > 194)
+  d4:	c1 50       	subi	r28, 0x01	; 1
+  d6:	c1 3c       	cpi	r28, 0xC1	; 193
+  d8:	91 f7       	brne	.-28     	; 0xbe <main+0x4a>
+  da:	c0 ec       	ldi	r28, 0xC0	; 192
+	}
+	
+	// 2.0V까지
+	while(i-- > 118)
+	{
+		DAC0.DATA = i;
+  dc:	00 e8       	ldi	r16, 0x80	; 128
+  de:	16 e0       	ldi	r17, 0x06	; 6
+  e0:	f8 01       	movw	r30, r16
+  e2:	c1 83       	std	Z+1, r28	; 0x01
+  e4:	82 eb       	ldi	r24, 0xB2	; 178
+  e6:	9b e7       	ldi	r25, 0x7B	; 123
+  e8:	01 97       	sbiw	r24, 0x01	; 1
+  ea:	f1 f7       	brne	.-4      	; 0xe8 <main+0x74>
+  ec:	00 c0       	rjmp	.+0      	; 0xee <main+0x7a>
+		_delay_ms(3000/(194-118+1));
+		led();
+  ee:	ab df       	rcall	.-170    	; 0x46 <led>
+		_delay_ms(3000/(223-194+1));
+		led();
+	}
+	
+	// 2.0V까지
+	while(i-- > 118)
+  f0:	c1 50       	subi	r28, 0x01	; 1
+  f2:	c5 37       	cpi	r28, 0x75	; 117
+  f4:	a9 f7       	brne	.-22     	; 0xe0 <main+0x6c>
+  f6:	c4 e7       	ldi	r28, 0x74	; 116
+	}
+	
+	// 3.3V까지
+	while(i-- > 0)
+	{
+		DAC0.DATA = i;
+  f8:	00 e8       	ldi	r16, 0x80	; 128
+  fa:	16 e0       	ldi	r17, 0x06	; 6
+  fc:	f8 01       	movw	r30, r16
+  fe:	c1 83       	std	Z+1, r28	; 0x01
+ 100:	fa e6       	ldi	r31, 0x6A	; 106
+ 102:	24 e0       	ldi	r18, 0x04	; 4
+ 104:	81 e0       	ldi	r24, 0x01	; 1
+ 106:	f1 50       	subi	r31, 0x01	; 1
+ 108:	20 40       	sbci	r18, 0x00	; 0
+ 10a:	80 40       	sbci	r24, 0x00	; 0
+ 10c:	e1 f7       	brne	.-8      	; 0x106 <main+0x92>
+ 10e:	00 c0       	rjmp	.+0      	; 0x110 <main+0x9c>
+		_delay_ms(3000/(223-194+1));
+		led();
+ 110:	9a df       	rcall	.-204    	; 0x46 <led>
+		_delay_ms(3000/(194-118+1));
+		led();
+	}
+	
+	// 3.3V까지
+	while(i-- > 0)
+ 112:	c1 50       	subi	r28, 0x01	; 1
+ 114:	98 f7       	brcc	.-26     	; 0xfc <main+0x88>
+		DAC0.DATA = i;
+		_delay_ms(3000/(223-194+1));
+		led();
+	}
+
+	DAC0.DATA = 0;
+ 116:	10 92 81 06 	sts	0x0681, r1	; 0x800681 <__TEXT_REGION_LENGTH__+0x700681>
+ 11a:	ff cf       	rjmp	.-2      	; 0x11a <main+0xa6>
+
+0000011c <_exit>:
+ 11c:	f8 94       	cli
+
+0000011e <__stop_program>:
+ 11e:	ff cf       	rjmp	.-2      	; 0x11e <__stop_program>

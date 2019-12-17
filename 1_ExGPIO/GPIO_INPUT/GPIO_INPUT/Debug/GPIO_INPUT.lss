@@ -1,0 +1,122 @@
+
+GPIO_INPUT.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  000000cc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000078  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  000000cc  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000fc  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000138  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000017fe  00000000  00000000  00000158  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000014d5  00000000  00000000  00001956  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000267  00000000  00000000  00002e2b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00003094  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000bdc  00000000  00000000  000030b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000010  00000000  00000000  00003c94  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+  1e:	12 c0       	rjmp	.+36     	; 0x44 <__bad_interrupt>
+  20:	11 c0       	rjmp	.+34     	; 0x44 <__bad_interrupt>
+  22:	10 c0       	rjmp	.+32     	; 0x44 <__bad_interrupt>
+  24:	0f c0       	rjmp	.+30     	; 0x44 <__bad_interrupt>
+  26:	0e c0       	rjmp	.+28     	; 0x44 <__bad_interrupt>
+  28:	0d c0       	rjmp	.+26     	; 0x44 <__bad_interrupt>
+  2a:	0c c0       	rjmp	.+24     	; 0x44 <__bad_interrupt>
+  2c:	0b c0       	rjmp	.+22     	; 0x44 <__bad_interrupt>
+  2e:	0a c0       	rjmp	.+20     	; 0x44 <__bad_interrupt>
+  30:	09 c0       	rjmp	.+18     	; 0x44 <__bad_interrupt>
+  32:	08 c0       	rjmp	.+16     	; 0x44 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	02 d0       	rcall	.+4      	; 0x46 <main>
+  42:	18 c0       	rjmp	.+48     	; 0x74 <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <main>:
+int main(void)
+{
+	// EX) PORTn.DIRSET = _BV(핀번호);
+	// --------- DIRSET = 출력
+	// --------- DIRCLR = 입력
+	PORTA.DIRSET = _BV(1);
+  46:	82 e0       	ldi	r24, 0x02	; 2
+  48:	80 93 01 04 	sts	0x0401, r24	; 0x800401 <__TEXT_REGION_LENGTH__+0x700401>
+	PORTB.DIRCLR = _BV(1);
+  4c:	e0 e2       	ldi	r30, 0x20	; 32
+  4e:	f4 e0       	ldi	r31, 0x04	; 4
+  50:	82 83       	std	Z+2, r24	; 0x02
+	
+	
+	PORTB.PIN1CTRL |= PORT_PULLUPEN_bm;		// Pull up Enable
+  52:	81 89       	ldd	r24, Z+17	; 0x11
+  54:	88 60       	ori	r24, 0x08	; 8
+  56:	81 8b       	std	Z+17, r24	; 0x11
+	while (1)
+	{
+		// EX) PORTn.IN & _BV(핀번호) ::::: return 확인필요
+		if(PORTB.IN & _BV(1))	PORTA.OUTSET = _BV(1);
+  58:	a0 e2       	ldi	r26, 0x20	; 32
+  5a:	b4 e0       	ldi	r27, 0x04	; 4
+		else					PORTA.OUTCLR = _BV(1);
+  5c:	e0 e0       	ldi	r30, 0x00	; 0
+  5e:	f4 e0       	ldi	r31, 0x04	; 4
+  60:	92 e0       	ldi	r25, 0x02	; 2
+	
+	PORTB.PIN1CTRL |= PORT_PULLUPEN_bm;		// Pull up Enable
+	while (1)
+	{
+		// EX) PORTn.IN & _BV(핀번호) ::::: return 확인필요
+		if(PORTB.IN & _BV(1))	PORTA.OUTSET = _BV(1);
+  62:	18 96       	adiw	r26, 0x08	; 8
+  64:	8c 91       	ld	r24, X
+  66:	18 97       	sbiw	r26, 0x08	; 8
+  68:	81 ff       	sbrs	r24, 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <main+0x2a>
+  6c:	95 83       	std	Z+5, r25	; 0x05
+  6e:	f9 cf       	rjmp	.-14     	; 0x62 <main+0x1c>
+		else					PORTA.OUTCLR = _BV(1);
+  70:	96 83       	std	Z+6, r25	; 0x06
+  72:	f7 cf       	rjmp	.-18     	; 0x62 <main+0x1c>
+
+00000074 <_exit>:
+  74:	f8 94       	cli
+
+00000076 <__stop_program>:
+  76:	ff cf       	rjmp	.-2      	; 0x76 <__stop_program>
